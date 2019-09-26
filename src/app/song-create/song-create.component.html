@@ -1,3 +1,15 @@
-<p>
-  song-create works!
-</p>
+
+<button class="btn btn-lg " [routerLink]="[ '/songs' ]" >
+ <i class="material-icons">
+    arrow_back
+    </i>
+    Back To song list 
+
+</button>
+<form>
+  <div class="form-group">
+    <label for="songTitle">Song title</label>
+    <input  [(ngModel)]="title" class="form-control" id="songTitle" name="title" placeholder="Enter title">
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="addSong()">Submit</button>
+</form>

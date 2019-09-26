@@ -2,16 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 import {map} from 'rxjs/operators';
+import { getSongsQuery, deleteSong } from '../queries';
+import { Router } from '@angular/router';
 
-
-
-const getSongsQuery=gql`
-query getSongs {
-  songs {
-    title
-  }
-}
-`;
 
 @Component({
   selector: 'app-song-list',
@@ -21,19 +14,31 @@ query getSongs {
 export class SongListComponent implements OnInit {
   songs:any[]=[];
 
-  constructor(private apollo:Apollo) { }
+  constructor(private apollo:Apollo,
+              private router:Router) { }
 
   ngOnInit() {
      this.apollo
-      .query({query:getSongsQuery })
+      .watchQuery({query:getSongsQuery })
+      .valueChanges
       .pipe(
         map((result:any)=> result.data.songs)
       )
       .subscribe((songs)=>{
-        console.log(songs)
+        this.songs=songs
+        console.log(this.songs)
       })
   }
 
+  deleteSong(id){
+    const variables={id:id}
+    this.apollo
+    .mutate({mutation:deleteSong,variables,refetchQueries:[{query:getSongsQuery}] })
+    .subscribe(songDeleted=>{
+    })
+  }
+  navigateToSong(id){
+  this.router.navigate(['/songs',id])
+  }
   
-
 }

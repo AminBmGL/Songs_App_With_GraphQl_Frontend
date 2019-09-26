@@ -1,3 +1,33 @@
-<p>
-  song-detail works!
-</p>
+<button class="btn btn-lg " [routerLink]="[ '/songs' ]" >
+  <i class="material-icons">
+     arrow_back
+     </i>
+     Back To song list 
+ 
+ </button>
+
+<br>
+<br>
+<div class="card-body">
+    <h2 class="card-title">{{song.title}}</h2>
+    <h4 class="card-text">Song Lyrics :</h4>
+  </div>
+  <ul class="list-group list-group-flush" *ngIf="song.lyrics">
+    <li class="list-group-item collection-item" *ngFor="let lyric of song.lyrics">{{lyric.content}}
+        <i class="material-icons">
+            sentiment_very_satisfied
+            </i>
+    </li>
+  </ul>
+<br>
+<br>
+<br>
+<br>
+<h4>Add lyric to the song</h4>
+  <form>
+      <div class="form-group">
+        <label for="lyricContent">Lyric Content</label>
+        <input  [(ngModel)]="lyricContent" class="form-control" id="lyricContent" name="content" placeholder="Enter content">
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="addLyric()">Submit</button>
+    </form>
