@@ -42,7 +42,7 @@ lyricContent;
     )
     .subscribe(song=>{
       this.lyricContent=""
-      this.song=song
+      //this.song=song
     })
   }
 

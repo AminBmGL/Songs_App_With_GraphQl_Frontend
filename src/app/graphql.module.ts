@@ -46,7 +46,10 @@ export function createApollo(httpLink: HttpLink) {
   return {
     ssrMode:true,
     link: splittedLink,
-    cache: new InMemoryCache()
+    //with this config we identify each record in apollo store , so apollo can identify it and inform every component that use it when achage occurs on it 
+    cache: new InMemoryCache({
+      dataIdFromObject: object => object.id
+    })
   };
   
  
