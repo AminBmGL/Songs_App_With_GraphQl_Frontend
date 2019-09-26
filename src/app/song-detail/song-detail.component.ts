@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import { getSong, addLyricToSong } from '../queries';
+import { getSong, addLyricToSong, likeLyric } from '../queries';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -43,6 +43,29 @@ lyricContent;
     .subscribe(song=>{
       this.lyricContent=""
       //this.song=song
+    })
+  }
+  likeLyric(lyricId,nblikes){
+    const variables={
+      id:lyricId
+    }
+    this.apollo
+    .mutate({mutation:likeLyric,
+      variables,
+      //Guess the response to change it immediately and avoid latency
+      optimisticResponse: {
+        __typename: 'Mutation',
+        likeLyric: {
+          id: lyricId,
+          __typename: 'LyricType',
+          likes: nblikes+1,
+        }
+     }})
+    .pipe(
+      map((response:any)=>response.data.likeLyric)
+    )
+    .subscribe(lyric=>{
+    
     })
   }
 

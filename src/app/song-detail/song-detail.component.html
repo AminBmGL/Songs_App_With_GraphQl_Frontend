@@ -13,11 +13,17 @@
     <h4 class="card-text">Song Lyrics :</h4>
   </div>
   <ul class="list-group list-group-flush" *ngIf="song.lyrics">
-    <li class="list-group-item collection-item" *ngFor="let lyric of song.lyrics">{{lyric.content}}
-        <i class="material-icons">
-            sentiment_very_satisfied
-            </i>
-    </li>
+    <li class="list-group-item collection-item" *ngFor="let lyric of song.lyrics">
+      {{lyric.content}}
+      <div class="vote-box">
+          <p style="margin-right: 20px"> {{lyric.likes}}</p>
+          <i class="material-icons" (click)="likeLyric(lyric.id,lyric.likes)">
+              thumb_up
+              </i>
+            </div>
+
+      </li>
+     
   </ul>
 <br>
 <br>
